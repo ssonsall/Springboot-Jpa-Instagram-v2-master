@@ -1,9 +1,12 @@
 let page = 0;
 
 $(window).scroll(function() {
-    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-      page++;
-      load_feed_box(); // 박스 3개씩 로드
+	/*버그 수정 (근사치 계산)*/
+    let checkNum = ($(window).scrollTop()) - ($(document).height() - $(window).height());
+	if (checkNum < 1 && checkNum > -1) {
+    	console.log('hi');
+        page++;
+        load_feed_box(); // 박스 3개씩 로드
     }
 });
 
@@ -26,7 +29,9 @@ function make_feed_box(image){
 		
 	feed_box += `</span> <span class="photo__action">`;
 	feed_box += `<i class="fa fa-comment-o"></i></span></div>`;
-	feed_box += `<span class="photo__likes">5,103 likes</span><div class="photo_caption">`;
+	
+	// 수정 좋아요 카운트 증가
+	feed_box += `<span class="photo__likes" id="photo_likes_count_${image.id}">${image.likeCount}</span><span class="photo__likes"> likes</span><div class="photo_caption">`;
 	feed_box += `<span class="photo__username">${image.user.username} </span>`;
 	feed_box += `${image.caption}</div><div class="photo_tag">`;
     
